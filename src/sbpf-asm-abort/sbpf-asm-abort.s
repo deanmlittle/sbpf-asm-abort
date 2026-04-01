@@ -1,4 +1,4 @@
 .globl e
 e:
-  mov32 r0, 1
+  mov64 r0, 1
   exit
