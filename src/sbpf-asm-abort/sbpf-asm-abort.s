@@ -1,4 +1,4 @@
 .globl e
 e:
-  lddw r0, 1
+  mov32 r0, 1
   exit
