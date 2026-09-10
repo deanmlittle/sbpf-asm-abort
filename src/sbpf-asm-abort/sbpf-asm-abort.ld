@@ -1,12 +1,12 @@
 PHDRS
 {
-  text    PT_LOAD    ; # Contains our executable code and constants
+  text    PT_LOAD FLAGS(1)    ; 
 }
 
 SECTIONS
 {
-  . = SIZEOF_HEADERS;
-  .text : { *(.text) }
+  . = 0x100000000;
+  .text : { *(.text) } :text
   .s : { *(.shstrtab) } # rename to save bytes
   /DISCARD/ : {
     *(.eh_frame*) # Exception handling frame information

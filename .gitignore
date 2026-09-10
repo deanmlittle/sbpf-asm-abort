@@ -1,5 +1,5 @@
 build/**/*.json
-deploy/**/*
+deploy/*.json
 target/
 node_modules
 .sbpf

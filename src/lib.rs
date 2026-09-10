@@ -1,8 +1,9 @@
 #[cfg(test)]
 mod tests {
     use mollusk_svm::{result::Check, Mollusk};
-    use solana_sdk::pubkey::Pubkey;
-    use solana_sdk::instruction::Instruction;
+    use solana_address::Address;
+    use solana_instruction::Instruction;
+    use solana_program_error::ProgramError;
 
     #[test]
     fn test_hello_world() {
@@ -10,21 +11,16 @@ mod tests {
             [..32]
             .try_into()
             .expect("slice with incorrect length");
-        let program_id = Pubkey::new_from_array(program_id_keypair_bytes);
+        let program_id = Address::new_from_array(program_id_keypair_bytes);
 
-        let instruction = Instruction::new_with_bytes(
-            program_id,
-            &[],
-            vec![]
-        );
+        let instruction = Instruction::new_with_bytes(program_id, &[], vec![]);
 
         let mollusk = Mollusk::new(&program_id, "deploy/sbpf-asm-abort");
 
-        let result = mollusk.process_and_validate_instruction(
+        mollusk.process_and_validate_instruction(
             &instruction,
             &[],
-            &[Check::success()]
+            &[Check::err(ProgramError::Custom(1))],
         );
-        assert!(!result.program_result.is_err());
     }
 }
